@@ -21,10 +21,11 @@ jobs:
       run: |
         docker compose build
 
-    # Se tiveres testes no backend futuramente, podes executá-los aqui:
-    # - name: Run Backend Tests
-    #   run: |
-    #     docker compose run backend pytest
+    - name: Run Backend Extreme Tests
+      run: |
+        docker compose up -d db backend
+        sleep 20
+        docker compose exec -T backend python tests/test_extreme.py
 
     - name: Verify Frontend Build
       working-directory: ./frontend

@@ -48,7 +48,7 @@ test.describe(`Sync Community E2E Tests - ${viewport.name}`, () => {
       // Find and click all safe buttons (avoiding destructive actions like 'delete' or 'logout')
       const buttons = page.locator('button:not([type="submit"])');
       const buttonCount = await buttons.count();
-      for (let i = 0; i < Math.min(buttonCount, 5); i++) {
+      for (let i = 0; i < buttonCount; i++) {
         const btn = buttons.nth(i);
         const text = await btn.textContent();
         if (btn && await btn.isVisible() && !text?.toLowerCase().includes('delete') && !text?.toLowerCase().includes('logout')) {
@@ -73,9 +73,9 @@ test.describe(`Sync Community E2E Tests - ${viewport.name}`, () => {
       // Click on generic links (Navigation)
       const navLinks = page.locator('a');
       const linkCount = await navLinks.count();
-      for (let i = 0; i < Math.min(linkCount, 3); i++) {
+      for (let i = 0; i < linkCount; i++) {
           if (await navLinks.nth(i).isVisible()) {
-              await navLinks.nth(i).click();
+              await navLinks.nth(i).click({ force: true });
               await page.waitForTimeout(500); // Wait for navigation render
           }
       }
