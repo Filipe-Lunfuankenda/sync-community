@@ -24,7 +24,7 @@ jobs:
     - name: Run Backend Extreme Tests
       run: |
         docker compose up -d db backend
-        sleep 20
+        sleep 45
         docker compose exec -T backend python tests/test_extreme.py
 
     - name: Verify Frontend Build

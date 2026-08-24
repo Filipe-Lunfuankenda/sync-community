@@ -20,7 +20,7 @@ jobs:
     - name: Start GovFlow Environment
       run: |
         docker compose up --build -d
-        sleep 20 
+        sleep 45 
 
     - name: Run k6 Load Test
       run: |

@@ -19,7 +19,7 @@ jobs:
         run: |
           docker compose up --build -d
           # Give services ample time to start up and seed the database
-          sleep 20
+          sleep 45
 
       - name: ZAP Full Scan (Frontend)
         uses: zaproxy/action-full-scan@v0.12.0
