@@ -3,6 +3,7 @@ import time
 import sys
 import urllib.request
 import urllib.error
+import urllib.parse
 
 BASE_URL = "http://localhost:8000/api/v1"
 

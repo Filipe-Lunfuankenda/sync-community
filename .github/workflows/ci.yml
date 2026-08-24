@@ -17,13 +17,9 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Build Docker Images (Dry Run)
-      run: |
-        docker compose build
-
     - name: Run Backend Extreme Tests
       run: |
-        docker compose up -d db backend
+        docker compose up --build -d db backend
         sleep 45
         docker compose exec -T backend python tests/test_extreme.py
 

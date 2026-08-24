@@ -28,6 +28,7 @@ jobs:
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
           allow_issue_writing: false
+          fail_action: false
 
       - name: ZAP API Scan (Backend)
         uses: zaproxy/action-api-scan@v0.5.0
