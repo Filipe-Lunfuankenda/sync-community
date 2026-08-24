@@ -13,8 +13,11 @@ def do_request(url, method="GET", data=None, headers=None):
     if headers is None:
         headers = {}
     if data is not None:
-        data = json.dumps(data).encode('utf-8')
-        headers['Content-Type'] = 'application/json'
+        if isinstance(data, dict) and headers.get('Content-Type') == 'application/x-www-form-urlencoded':
+            data = urllib.parse.urlencode(data).encode('utf-8')
+        else:
+            data = json.dumps(data).encode('utf-8')
+            headers['Content-Type'] = 'application/json'
     
     req = urllib.request.Request(url, data=data, headers=headers, method=method)
     try:
@@ -41,14 +44,15 @@ try:
 
     print_step("2. Teste de Injeção e Segurança no Login")
     sql_payload = {"username": "' OR '1'='1", "password": "password"}
-    status, _ = do_request(f"{BASE_URL}/auth/login", method="POST", data=sql_payload)
-    assert status in [400, 401, 403, 404, 422], f"SQL Injection não foi bloqueada adequadamente! Status: {status}"
+    status, _ = do_request(f"{BASE_URL}/auth/login", method="POST", data=sql_payload, headers={'Content-Type': 'application/x-www-form-urlencoded'})
+    assert status in [400, 401, 422], f"Vulnerável a SQL Injection! Status: {status}"
     
     print_step("3. Login Legítimo e Aquisição de Token")
     login_data = {"username": "admin@comunidade.pt", "password": "Sync@Sec!2026"}
-    status, data = do_request(f"{BASE_URL}/auth/login", method="POST", data=login_data)
+    status, data = do_request(f"{BASE_URL}/auth/login", method="POST", data=login_data, headers={'Content-Type': 'application/x-www-form-urlencoded'})
     assert status == 200, f"Login falhou: {data}"
-    token = data["access_token"]
+    token = data.get("access_token")
+    assert token, "Token ausente"
     user_headers = {"Authorization": f"Bearer {token}"}
     
     print_step("4. Teste Rigoroso de CRUD (Organizações)")

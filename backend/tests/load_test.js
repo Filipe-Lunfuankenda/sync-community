@@ -21,14 +21,14 @@ const BASE_URL = 'http://localhost:8000/api/v1';
 
 export function setup() {
   // Login once to get token
-  const payload = JSON.stringify({
+  const payload = {
     username: 'admin@comunidade.pt',
     password: 'Sync@Sec!2026',
-  });
+  };
 
   const params = {
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
   };
 

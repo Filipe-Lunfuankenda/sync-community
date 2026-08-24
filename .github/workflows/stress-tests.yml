@@ -24,7 +24,7 @@ jobs:
 
     - name: Run k6 Load Test
       run: |
-        docker run --network host -v ${{ github.workspace }}:/app -w /app grafana/k6 run backend/tests/load_test.js
+        docker run --user root --network host -v ${{ github.workspace }}:/app -w /app grafana/k6 run backend/tests/load_test.js
 
     - name: Upload k6 Report
       if: always()
