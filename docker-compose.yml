@@ -6,7 +6,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-admin}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Sync@Sec!2026}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-SyncSec!2026}
       POSTGRES_DB: ${POSTGRES_DB:-commucore_db}
     ports:
       - "5432:5432"
@@ -17,7 +17,7 @@ services:
     build: ./backend
     restart: always
     environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-Sync@Sec!2026}@db:5432/${POSTGRES_DB:-commucore_db}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-SyncSec!2026}@db:5432/${POSTGRES_DB:-commucore_db}
     ports:
       - "8000:8000"
     depends_on:
