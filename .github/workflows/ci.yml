@@ -23,6 +23,10 @@ jobs:
         sleep 45
         docker compose exec -T backend python tests/test_extreme.py
 
+    - name: Dump Backend Logs on Failure
+      if: failure()
+      run: docker compose logs backend
+
     - name: Verify Frontend Build
       working-directory: ./frontend
       run: |

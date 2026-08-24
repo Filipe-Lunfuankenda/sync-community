@@ -26,6 +26,10 @@ jobs:
       run: |
         docker run --user root --network host -v ${{ github.workspace }}:/app -w /app grafana/k6 run backend/tests/load_test.js
 
+    - name: Dump Backend Logs on Failure
+      if: failure()
+      run: docker compose logs backend
+
     - name: Upload k6 Report
       if: always()
       uses: actions/upload-artifact@v4
