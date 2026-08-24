@@ -86,7 +86,6 @@ def create_instance(
         template_id=template.id,
         title=instance_in.title,
         description=instance_in.description,
-        description=instance_in.description,
         status=ProcessState.PENDING,
         current_step_order=1,
         requester_id=current_user.id,
