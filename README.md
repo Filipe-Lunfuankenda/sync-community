@@ -25,10 +25,11 @@ The platform comes pre-seeded with test users in the database (`sql_app.db`) to 
 
 ## 🏗️ Architecture & Tech Stack
 
-This project is built using a modern, scalable microservices approach:
-* **Backend (Core API):** Python (FastAPI) + SQLAlchemy + PostgreSQL (SQLite for local dev fallback).
+This project is built using a modern, scalable polyglot microservices approach, leveraging the strengths of different languages:
+* **Backend (Core API):** Python (FastAPI) + SQLAlchemy + PostgreSQL (SQLite for local dev fallback). Handling heavy business logic.
 * **Frontend:** React + TypeScript + Vite + Tailwind CSS.
-* **Document Service:** Java (Spring Boot) - Dedicated microservice for heavy document generation and processing.
+* **Document Service:** Java (Spring Boot) - Dedicated microservice for heavy document generation and PDF processing.
+* **Realtime Service:** Go (Golang) - Dedicated microservice for ultra-fast, high-concurrency tasks like real-time notifications and WebSockets.
 * **Infrastructure:** Fully Dockerized (`docker-compose`) for seamless deployment anywhere.
 
 ---

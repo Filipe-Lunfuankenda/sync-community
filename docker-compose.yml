@@ -29,6 +29,12 @@ services:
     ports:
       - "8080:8080"
 
+  realtime-service:
+    build: ./realtime-service
+    restart: always
+    ports:
+      - "8081:8081"
+
   frontend:
     build:
       context: ./frontend
