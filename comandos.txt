@@ -1,0 +1,23 @@
+# Conectar ao servidor
+ssh -i "sync-community-server_key.pem" azureuser@20.199.97.71
+
+# Parte 1: Atualizar o sistema
+sudo apt-get update && sudo apt-get upgrade -y
+
+# Parte 2: Instalar Docker e Docker Compose
+sudo apt-get install -y docker.io docker-compose
+
+# Parte 3: Dar permissão ao teu utilizador
+sudo usermod -aG docker azureuser
+
+# Copiar os ficheiros para o servidor
+scp -i "sync-community-server_key.pem" -r backend docs-service frontend docker-compose.yml azureuser@20.199.97.71:/home/azureuser/
+
+# Atualizar e iniciar os containers
+sudo docker-compose up -d --build
+
+# Parar os containers
+sudo docker-compose down
+
+# Atualizar e iniciar os containers
+ssh -i sync-community-server_key.pem azureuser@20.199.97.71 "sudo docker-compose down --remove-orphans && sudo docker-compose up -d --build"

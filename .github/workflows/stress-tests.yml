@@ -1,0 +1,36 @@
+name: Stress & Performance Tests (k6)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  load-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Start GovFlow Environment
+      run: |
+        docker compose up --build -d
+        sleep 15 
+
+    - name: Run k6 Load Test
+      uses: grafana/k6-action@v0.3.1
+      with:
+        filename: backend/tests/load_test.js
+
+    - name: Upload k6 Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: k6-performance-report
+        path: k6-report.html
+        retention-days: 14
