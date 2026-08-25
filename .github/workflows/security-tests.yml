@@ -17,7 +17,7 @@ jobs:
 
       - name: Start GovFlow Environment
         run: |
-          docker compose up --build -d
+          docker compose up --build -d db backend frontend
           # Give services ample time to start up and seed the database
           sleep 45
 

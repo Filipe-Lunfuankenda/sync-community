@@ -19,9 +19,9 @@ jobs:
 
     - name: Start GovFlow Environment
       run: |
-        docker compose up --build -d
+        docker compose up --build -d db backend frontend
         # Wait for services to become healthy/available
-        sleep 15 
+        sleep 45 
 
     - name: Set up Node.js
       uses: actions/setup-node@v4

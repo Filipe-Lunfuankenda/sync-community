@@ -35,7 +35,20 @@ export function setup() {
   const res = http.post(`${BASE_URL}/auth/login`, payload, params);
   let token = '';
   if (res.status === 200) {
-      token = res.json('access_token');
+      const baseToken = res.json('access_token');
+      // We need an org token. Let's get the user's orgs.
+      const orgsRes = http.get(`${BASE_URL}/organizations/`, {
+          headers: { 'Authorization': `Bearer ${baseToken}` }
+      });
+      if (orgsRes.status === 200 && orgsRes.json().length > 0) {
+          const orgId = orgsRes.json()[0].id;
+          const switchRes = http.post(`${BASE_URL}/auth/switch-org/${orgId}`, null, {
+              headers: { 'Authorization': `Bearer ${baseToken}` }
+          });
+          if (switchRes.status === 200) {
+              token = switchRes.json('access_token');
+          }
+      }
   }
   return { token: token };
 }

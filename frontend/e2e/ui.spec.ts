@@ -50,15 +50,17 @@ test.describe(`Sync Community E2E Tests - ${viewport.name}`, () => {
       const buttonCount = await buttons.count();
       for (let i = 0; i < buttonCount; i++) {
         const btn = buttons.nth(i);
-        const text = await btn.textContent();
-        if (btn && await btn.isVisible() && !text?.toLowerCase().includes('delete') && !text?.toLowerCase().includes('logout')) {
-          await btn.click({ force: true });
-          await page.waitForTimeout(300); // Wait for modal or state change
-          
-          // If a modal opened, try to close it
-          const closeBtn = page.locator('button[aria-label="close"], .close-modal, .cancel-btn').first();
-          if (await closeBtn.isVisible()) {
-             await closeBtn.click();
+        if (await btn.isVisible()) {
+          const text = await btn.textContent();
+          if (text && !text.toLowerCase().includes('delete') && !text.toLowerCase().includes('logout')) {
+            await btn.click({ force: true });
+            await page.waitForTimeout(300); // Wait for modal or state change
+            
+            // If a modal opened, try to close it
+            const closeBtn = page.locator('button[aria-label="close"], .close-modal, .cancel-btn').first();
+            if (await closeBtn.isVisible()) {
+               await closeBtn.click();
+            }
           }
         }
       }
