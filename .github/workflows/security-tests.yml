@@ -24,16 +24,14 @@ jobs:
       - name: ZAP API Scan (Backend)
         uses: zaproxy/action-api-scan@v0.8.0
         with:
-          target: 'http://backend:8000/openapi.json'
+          target: 'http://localhost:8000/openapi.json'
           format: 'openapi'
-          network_name: 'govflow_net'
           fail_action: false
 
       - name: ZAP Full Scan (Frontend)
         uses: zaproxy/action-full-scan@v0.12.0
         with:
-          target: 'http://frontend'
-          network_name: 'govflow_net'
+          target: 'http://localhost'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
           allow_issue_writing: false

@@ -12,8 +12,6 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - govflow_net
 
   backend:
     build: ./backend
@@ -24,24 +22,18 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    networks:
-      - govflow_net
 
   docs-service:
     build: ./docs-service
     restart: always
     ports:
       - "8080:8080"
-    networks:
-      - govflow_net
 
   realtime-service:
     build: ./realtime-service
     restart: always
     ports:
       - "8081:8081"
-    networks:
-      - govflow_net
 
   frontend:
     build:
@@ -55,12 +47,6 @@ services:
       - "80:80"
     depends_on:
       - backend
-    networks:
-      - govflow_net
 
 volumes:
   postgres_data:
-
-networks:
-  govflow_net:
-    name: govflow_net
