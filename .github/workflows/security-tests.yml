@@ -27,6 +27,7 @@ jobs:
           target: 'http://localhost:8000/openapi.json'
           format: 'openapi'
           fail_action: false
+          allow_issue_writing: false
 
       - name: ZAP Full Scan (Frontend)
         uses: zaproxy/action-full-scan@v0.12.0
