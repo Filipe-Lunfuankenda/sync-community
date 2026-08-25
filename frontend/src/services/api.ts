@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // The base URL can be defined via Environment Variables (.env) 
-// For now, defaulting to local dev server
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+// Fallback to relative path so it works perfectly in Docker/Codespaces via Nginx Proxy
+const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
 
 const api = axios.create({
     baseURL: API_URL,
