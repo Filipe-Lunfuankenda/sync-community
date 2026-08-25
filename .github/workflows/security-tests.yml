@@ -22,7 +22,7 @@ jobs:
           sleep 45
 
       - name: ZAP API Scan (Backend)
-        uses: zaproxy/action-api-scan@master
+        uses: zaproxy/action-api-scan@v0.10.0
         with:
           target: 'http://localhost:8000/openapi.json'
           format: 'openapi'
