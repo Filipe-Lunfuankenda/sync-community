@@ -44,13 +44,16 @@ def upgrade() -> None:
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('requester_id', sa.String(), nullable=False),
     sa.Column('organization_id', sa.String(), nullable=False),
+    sa.Column('management_area_id', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['organization_id'], ['organizations.id'], ),
+    sa.ForeignKeyConstraint(['management_area_id'], ['management_areas.id'], ),
     sa.ForeignKeyConstraint(['requester_id'], ['users.id'], ),
     sa.ForeignKeyConstraint(['template_id'], ['process_templates.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_process_instances_id'), 'process_instances', ['id'], unique=False)
     op.create_index(op.f('ix_process_instances_organization_id'), 'process_instances', ['organization_id'], unique=False)
+    op.create_index(op.f('ix_process_instances_management_area_id'), 'process_instances', ['management_area_id'], unique=False)
     op.create_table('process_steps',
     sa.Column('id', sa.String(), nullable=False),
     sa.Column('template_id', sa.String(), nullable=False),

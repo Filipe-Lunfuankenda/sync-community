@@ -32,6 +32,17 @@ def upgrade() -> None:
     op.create_index(op.f('ix_organizations_id'), 'organizations', ['id'], unique=False)
     op.create_index(op.f('ix_organizations_name'), 'organizations', ['name'], unique=False)
     op.create_index(op.f('ix_organizations_subdomain'), 'organizations', ['subdomain'], unique=True)
+    
+    op.create_table('management_areas',
+    sa.Column('id', sa.String(), nullable=False),
+    sa.Column('name', sa.String(), nullable=False),
+    sa.Column('type', sa.String(), nullable=True),
+    sa.Column('organization_id', sa.String(), nullable=False),
+    sa.ForeignKeyConstraint(['organization_id'], ['organizations.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_management_areas_id'), 'management_areas', ['id'], unique=False)
+    
     op.create_table('permissions',
     sa.Column('id', sa.String(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
@@ -107,4 +118,7 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_organizations_name'), table_name='organizations')
     op.drop_index(op.f('ix_organizations_id'), table_name='organizations')
     op.drop_table('organizations')
+    
+    op.drop_index(op.f('ix_management_areas_id'), table_name='management_areas')
+    op.drop_table('management_areas')
     # ### end Alembic commands ###
